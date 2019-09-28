@@ -12,12 +12,16 @@ export default function TodoInput() {
     }
   }, [inputRef]);
 
-  const handleSubmit = React.useCallback(() => {
-    dispatch!({ type: "add", payload: value });
-  }, [dispatch, value]);
+  const handleSubmit = React.useCallback(
+    e => {
+      dispatch({ type: "add", payload: value });
+      e.preventDefault();
+    },
+    [dispatch, value]
+  );
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <input type="text" value={value} ref={inputRef} onChange={handleChange} />
       <button type="button" onClick={handleSubmit}>
         ADD

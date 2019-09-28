@@ -5,29 +5,33 @@ export interface TodoState {
 }
 
 export interface TodoActionType {
-  type: "add";
-  payload: string;
+  type: "add" | "toggle";
+  payload: any;
 }
 
 export function reducer(state: TodoState, action: TodoActionType) {
   switch (action.type) {
     case "add":
       const lastTodo = state.todos[state.todos.length - 1];
-      let id;
-      if (lastTodo) {
-        id = lastTodo.id + 1;
-      } else {
-        id = 1;
-      }
+
       return {
         todos: [
           ...state.todos,
           {
-            id,
+            id: lastTodo ? lastTodo.id + 1 : 1,
             task: action.payload,
             done: false,
           },
         ],
+      };
+    case "toggle":
+      const todo = state.todos.find(t => t.id === action.payload);
+      if (todo) {
+        todo.done = !todo.done;
+      }
+
+      return {
+        todos: [...state.todos],
       };
   }
 }

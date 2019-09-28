@@ -2,14 +2,14 @@ import * as React from "react";
 import Todo from "./Todo";
 import { TodoContext } from "../App";
 
-export default function TodoList() {
+export default function DoneList() {
   const { todos } = React.useContext(TodoContext);
   return (
     <div>
-      <h3>할 일</h3>
+      <h3>완료된 일</h3>
       <ul>
         {todos
-          .filter(t => !t.done)
+          .filter(t => t.done)
           .map(t => (
             <Todo key={t.id} todo={t} />
           ))}
